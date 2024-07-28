@@ -1,0 +1,40 @@
+{
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.5.2",
+    "csv-stringify": "^6.5.0",
+    "csv-writer": "^1.6.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-ws": "^5.0.2",
+    "jquery-ui": "^1.13.3",
+    "pug": "^3.0.3"
+  },
+  "name": "rtr-gui-pwa",
+  "version": "1.0.0",
+  "description": "RTR WEB GUI made as PWA",
+  "main": "app.js",
+  "devDependencies": {
+    "browser-sync": "^3.0.2",
+    "bulma": "^1.0.1",
+    "nodemon": "^3.1.4",
+    "sass": "^1.77.8"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./app.js",
+    "ui": "browser-sync start --config bs-config.js",
+    "css-build": "sass --watch sass:public/css",
+    "css-watch": "npm run css-build -- --watch" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "gitea@localhost:SirStone/RTR-GUI-PWA.git"
+  },
+  "keywords": [
+    "robocode",
+    "WEB",
+    "PWA"
+  ],
+  "author": "Davide Cappellini aka SirStone",
+  "license": "GPL-3.0-or-later"
+}
