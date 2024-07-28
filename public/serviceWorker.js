@@ -1,5 +1,3 @@
-const channel = new BroadcastChannel('sw-messages');
-
 const cacheName = 'rtrwebgui';
 const precache = [
   '/',
@@ -11,7 +9,6 @@ const precache = [
   '/js/index.js',
 ];
 
-var version = '1.0.0';
 self.skipWaiting();
 
 self.addEventListener('install', event => {
@@ -40,7 +37,6 @@ self.addEventListener("activate", event => {
   );
 
   console.log('Service Worker activated');
-  channel.postMessage({message: Date.now()});
 });
 
 self.addEventListener('fetch', event => {

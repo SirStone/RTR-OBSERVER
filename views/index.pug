@@ -6,7 +6,9 @@ html
     link(rel='manifest', href='manifest.json')
     title #{title}
     link(rel="stylesheet", href="css/index.css")
-    script(src='js/index.js')
+    script(src='js/serviceWorkerRegister.js')
   body
-    p.title Bulma is available! #{version} 2
+    div.is-hidden(id='version' version=version)
+    p.title Bulma is available!
     img.image(src='img/RTR_512x512.png')
+    script(src='js/index.js')
