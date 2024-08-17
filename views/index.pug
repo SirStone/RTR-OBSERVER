@@ -2,13 +2,46 @@ doctype html
 html
   head
     meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='manifest', href='manifest.json')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    link(rel='manifest' href='manifest.json')
     title #{title}
-    link(rel="stylesheet", href="css/index.css")
+    link(rel="stylesheet" href="css/index.css")
     script(src='js/serviceWorkerRegister.js')
-  body
+    script(src='https://code.jquery.com/jquery-3.7.1.slim.min.js' integrity='sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=' crossorigin='anonymous')
+  body.has-background-dark
+    div.has-background-info(id="status_container")
+      table(id="status_table")
+        tr(id="connection_status")
+          td.label Connection status:
+          td.status
+            span.icon
+              i.fa.fa-times
+            | Disconnected
+        tr(id="game_status")
+          td.label Game status:
+          td.status
+            span.icon
+              i.fa.fa-question
+            | Unknown
     div.is-hidden(id='version' version=version)
-    p.title Bulma is available!
-    img.image(src='img/RTR_512x512.png')
+    div.has-background-info(id='arena_container') No battle in progress.
+    canvas.gamecanvas(id='background')
+    canvas.gamecanvas(id='battlefield')
+
+
+
+    //- div.modal.is-active(id="no-vertical-layout")
+    //-   div.modal-background
+    //-   div.modal-content.is-clipped
+    //-     div.box.has-background-info.m-2
+    //-       article.media
+    //-         div.media-left
+    //-           span.icon.is-large.has-text-danger
+    //-             i.fa.fa-info.fa-3x
+    //-         div.media-content
+    //-           div.content
+    //-             p Please use the horizontal layout.
+
+
+    //- index script loaded at the end of the body
     script(src='js/index.js')

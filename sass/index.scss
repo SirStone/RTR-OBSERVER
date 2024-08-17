@@ -1,7 +1,24 @@
 @charset "utf-8";
 @import "../node_modules/bulma/bulma.scss";
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 
 body {
-  width: 1200px;
-  height: 800px;
+  width: 100vw;
+  height: 100vh;
+}
+
+#arena_container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media screen and (orientation: portrait) {
+}
+
+@media screen and (orientation: landscape) {
+  #no-vertical-layout {
+    display: none !important;
+  }
 }

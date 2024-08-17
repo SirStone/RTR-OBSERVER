@@ -7,12 +7,14 @@ const precache = [
   '/css/index.css',
   '/manifest.json',
   '/js/index.js',
+  // '/j́s/observer.js',
+  '/js/canvasDrawing.js',
+  '/js/gameSetup.js',
+  'https://code.jquery.com/jquery-3.7.1.slim.min.js'
 ];
 
-self.skipWaiting();
-
 self.addEventListener('install', event => {
-  console.log("installing app worker");
+  console.log("installing Service Worker");
   self.skipWaiting();
 
   event.waitUntil(
@@ -36,7 +38,7 @@ self.addEventListener("activate", event => {
     })
   );
 
-  console.log('Service Worker activated');
+  console.log('New Service Worker activated');
 });
 
 self.addEventListener('fetch', event => {

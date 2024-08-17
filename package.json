@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.5.2",
+    "bulma": "^1.0.1",
     "csv-stringify": "^6.5.0",
     "csv-writer": "^1.6.0",
     "dotenv": "^16.4.5",
@@ -15,7 +15,6 @@
   "main": "app.js",
   "devDependencies": {
     "browser-sync": "^3.0.2",
-    "bulma": "^1.0.1",
     "nodemon": "^3.1.4",
     "sass": "^1.77.8"
   },
