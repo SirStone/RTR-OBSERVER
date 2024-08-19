@@ -9,39 +9,76 @@ html
     script(src='js/serviceWorkerRegister.js')
     script(src='https://code.jquery.com/jquery-3.7.1.slim.min.js' integrity='sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=' crossorigin='anonymous')
   body.has-background-dark
-    div.has-background-info(id="status_container")
-      table(id="status_table")
-        tr(id="connection_status")
-          td.label Connection status:
-          td.status
-            span.icon
-              i.fa.fa-times
-            | Disconnected
-        tr(id="game_status")
-          td.label Game status:
-          td.status
-            span.icon
-              i.fa.fa-question
-            | Unknown
-    div.is-hidden(id='version' version=version)
-    div.has-background-info(id='arena_container') No battle in progress.
+    div(id="status_container")
+      div.field.is-grouped.is-grouped-multiline.p-1
+        div.control
+          div.tags.has-addons
+            span.tag.is-white Version
+            span.tag.is-info.status #{version}
+        div.control(id="connection_status")
+          div.tags.has-addons
+            span.tag.is-white Connection status
+            span.tag.is-info.status
+              span.icon
+                i.fa.fa-times
+        div.control(id="game_status")
+          div.tags.has-addons
+            span.tag.is-white Game status
+            span.tag.is-info.status
+              span.icon
+                i.fa.fa-question
+        div.control(id="screen_lock")
+          div.tags.has-addons
+            span.tag.is-white Screen lock
+            span.tag.is-info.status
+              span.icon
+                i.fa.fa-question
+      div.field.is-grouped.is-grouped-multiline.p-1(id="connection_parameters")
+        div.control(id="observer_name") 
+          div.tags.has-addons
+            span.tag.is-white.is-medium Name
+            span.tag.is-warning.is-medium
+              input.input.is-small(type='text' placeholder='Observer')
+        div.control(id="ip_dns")
+          div.tags.has-addons
+            span.tag.is-white.is-medium IP/DNS
+            span.tag.is-warning.is-medium
+              input.input.is-small(type='text' placeholder='localhost')
+        div.control(id="port")
+          div.tags.has-addons
+            span.tag.is-white.is-medium Port
+            span.tag.is-warning.is-medium
+              input.input.is-small(type='text' placeholder='7654')
+        div.control(id="secret")
+          div.tags.has-addons
+            span.tag.is-white.is-medium Secret
+            span.tag.is-warning.is-medium
+              input.input.is-small(type='text' placeholder='connection secret')
+        button.button.is-warning(id="connect_button") Connect
+
+
+  div.is-hidden(id='version' version=version)
+  div.has-background-info(id='arena_container') No battlefield available
     canvas.gamecanvas(id='background')
     canvas.gamecanvas(id='battlefield')
 
 
 
-    //- div.modal.is-active(id="no-vertical-layout")
-    //-   div.modal-background
-    //-   div.modal-content.is-clipped
-    //-     div.box.has-background-info.m-2
-    //-       article.media
-    //-         div.media-left
-    //-           span.icon.is-large.has-text-danger
-    //-             i.fa.fa-info.fa-3x
-    //-         div.media-content
-    //-           div.content
-    //-             p Please use the horizontal layout.
+  //- div.modal.is-active(id="no-vertical-layout")
+  //-   div.modal-background
+  //-   div.modal-content.is-clipped
+  //-     div.box.has-background-info.m-2
+  //-       article.media
+  //-         div.media-left
+  //-           span.icon.is-large.has-text-danger
+  //-             i.fa.fa-info.fa-3x
+  //-         div.media-content
+  //-           div.content
+  //-             p Please use the horizontal layout.
 
 
-    //- index script loaded at the end of the body
-    script(src='js/index.js')
+  //- temp load the "gameSetup" from file waiting if the server will provide it on day
+  script(src='js/gameSetup.js')
+
+  //- index script loaded at the end of the body
+  script(src='js/index.js')

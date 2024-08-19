@@ -7,7 +7,7 @@ const precache = [
   '/css/index.css',
   '/manifest.json',
   '/js/index.js',
-  // '/j́s/observer.js',
+  '/js/observer.js',
   '/js/canvasDrawing.js',
   '/js/gameSetup.js',
   'https://code.jquery.com/jquery-3.7.1.slim.min.js'
