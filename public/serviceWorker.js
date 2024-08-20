@@ -8,9 +8,7 @@ const precache = [
   '/manifest.json',
   '/js/index.js',
   '/js/observer.js',
-  '/js/canvasDrawing.js',
   '/js/gameSetup.js',
-  'https://code.jquery.com/jquery-3.7.1.slim.min.js'
 ];
 
 self.addEventListener('install', event => {

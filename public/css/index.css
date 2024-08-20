@@ -23323,16 +23323,20 @@ body {
   height: 100vh;
 }
 
-#arena_container {
+.gamecanvas {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+}
+
+canvas#background {
+  border: 1px solid rgb(1, 16, 65);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 @media screen and (orientation: landscape) {
-  #no-vertical-layout {
-    display: none !important;
+  #status_container {
+    width: 0;
   }
 }
 

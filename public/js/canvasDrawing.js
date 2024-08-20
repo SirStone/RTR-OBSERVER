@@ -1,37 +1,41 @@
-function drawBackground(ctx) {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.fillStyle = backgroundColor
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.fillStyle = 'lime'
+function drawBackground() {
+    bctx.clearRect(0, 0, bctx.canvas.width, bctx.canvas.height)
+    bctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+    bctx.fillRect(0, 0, bctx.canvas.width, bctx.canvas.height)
+    bctx.fillStyle = 'lime'
 
     // north
-    canvas_arrow(ctx, ctx.canvas.width/2, ctx.canvas.height/2, ctx.canvas.width/2, 20)
-    ctx.fillText('270', ctx.canvas.width/2-8, 12)
+    canvas_arrow(bctx, bctx.canvas.width/2, bctx.canvas.height/2, bctx.canvas.width/2, 20)
+    bctx.fillText('270', bctx.canvas.width/2-8, 12)
     
     // south
-    canvas_arrow(ctx, ctx.canvas.width/2, ctx.canvas.height/2, ctx.canvas.width/2, ctx.canvas.height-20)
-    ctx.fillText('90', ctx.canvas.width/2-6, ctx.canvas.height-4)
+    canvas_arrow(bctx, bctx.canvas.width/2, bctx.canvas.height/2, bctx.canvas.width/2, bctx.canvas.height-20)
+    bctx.fillText('90', bctx.canvas.width/2-6, bctx.canvas.height-4)
 
     // west
-    canvas_arrow(ctx, ctx.canvas.width/2, ctx.canvas.height/2, 20, ctx.canvas.height/2)
-    ctx.fillText('180', 2, ctx.canvas.height/2+3)
+    canvas_arrow(bctx, bctx.canvas.width/2, bctx.canvas.height/2, 20, bctx.canvas.height/2)
+    bctx.fillText('180', 2, bctx.canvas.height/2+3)
 
     // east
-    canvas_arrow(ctx, ctx.canvas.width/2, ctx.canvas.height/2, ctx.canvas.width-20, ctx.canvas.height/2)
-    ctx.fillText('0', ctx.canvas.width-8, ctx.canvas.height/2+3)
+    canvas_arrow(bctx, bctx.canvas.width/2, bctx.canvas.height/2, bctx.canvas.width-20, bctx.canvas.height/2)
+    bctx.fillText('0', bctx.canvas.width-8, bctx.canvas.height/2+3)
 
-    ctx.strokeStyle = "black"
-    ctx.stroke()
+    bctx.strokeStyle = "black"
+    bctx.stroke()
 
     // axes
-    canvas_arrow(ctx, 1, 1, 1, ctx.canvas.height-1) // Y
-    canvas_arrow(ctx, 1, 1, ctx.canvas.width-1, 1) // X
+    canvas_arrow(bctx, 1, 1, 1, bctx.canvas.height-1) // Y
+    canvas_arrow(bctx, 1, 1, bctx.canvas.width-1, 1) // X
     
-    ctx.strokeStyle = "lime"
-    ctx.stroke()
+    bctx.strokeStyle = "lime"
+    bctx.stroke()
 }
 
-function drawRadar(ctx, botstate, ratio, x, y, radarRadius) {
+function clearBattlefield() {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+}
+
+function drawRadar(botstate, ratio, x, y, radarRadius) {
     var radar_radius = radarRadius * ratio
 
     var angle1 = botstate.radarDirection-botstate.radarSweep
@@ -68,7 +72,7 @@ function drawRadar(ctx, botstate, ratio, x, y, radarRadius) {
     ctx.stroke()
 }
 
-function drawHittingCircle(ctx, botstate, ratio, x, y) {
+function drawHittingCircle(botstate, ratio, x, y) {
     var hittingCircle_radius = 18 * ratio
     ctx.beginPath()
     ctx.arc(x, y, hittingCircle_radius, 0, 2 * Math.PI, false)
@@ -77,7 +81,7 @@ function drawHittingCircle(ctx, botstate, ratio, x, y) {
     return hittingCircle_radius
 }
 
-function drawGun(ctx, botstate, ratio, x, y, gun_radius) {
+function drawGun(botstate, ratio, x, y, gun_radius) {
     var angle = botstate.gunDirection
     var linetoX = gun_radius * ratio * Math.cos((angle) * oneDegree) + x
     var linetoY = gun_radius * ratio * Math.sin((angle) * oneDegree) + y
@@ -94,7 +98,7 @@ function drawGun(ctx, botstate, ratio, x, y, gun_radius) {
     ctx.stroke()
 }
 
-function drawDirection(ctx, botstate, x, y, ratio) {
+function drawDirection(botstate, x, y, ratio) {
     ctx.moveTo(x, y)
     var angle = botstate.direction
     var linetoX = 50 * ratio * Math.cos((angle) * oneDegree) + x
@@ -105,7 +109,7 @@ function drawDirection(ctx, botstate, x, y, ratio) {
     ctx.stroke()
 }
 
-function drawBullet(ctx, bulletState, ratio) {
+function drawBullet(bulletState, ratio) {
     var x = bulletState.x * ratio
     var y = bulletState.y * ratio
 
@@ -116,7 +120,7 @@ function drawBullet(ctx, bulletState, ratio) {
     ctx.fill()
 }
 
-function drawId(ctx, botState, x, y, ratio, hittingCircle_radius) {
+function drawId(botState, x, y, ratio, hittingCircle_radius) {
     ctx.fillStyle = botState.bodyColor ? 'white' : 'black'
     ctx.font = `${hittingCircle_radius}px Arial`
     var shift = (hittingCircle_radius*0.5)
