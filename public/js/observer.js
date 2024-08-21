@@ -191,7 +191,7 @@ function drawRadar(botstate, ratio, x, y, radarRadius) {
 
     var radar_radius = radarRadius * ratio
 
-    var angle1 = -botstate.radarDirection - botstate.radarSweep
+    var angle1 = -botstate.radarDirection + botstate.radarSweep
     var angle2 = -botstate.radarDirection
     if (angle1 > angle2) {
         var from_angle = angle1
