@@ -41,36 +41,43 @@ function runObserver() {
 
         // Handle messages from the worker
         observer.addEventListener('message', function (event) {
-            switch (event.data) {
-                case "connected":
-                    updateConnectionStatus(true);
+            if (event.data.serverVersion) {
+                updateServerVersion(event.data.serverVersion);
+            }
+            else {
+                switch (event.data) {
+                    case "connected":
+                        updateConnectionStatus(true);
 
-                    // draw the battlefields
-                    sizeCanvas();
+                        // draw the battlefields
+                        sizeCanvas();
 
-                    drawBackground(background_context);
+                        drawBackground(background_context);
 
-                    // draw the battlefield
-                    // pass the battlefield canvas sizes to the observer
-                    observer.postMessage({ canvas: battlefield_offscreen }, [battlefield_offscreen]);
+                        // draw the battlefield
+                        // pass the battlefield canvas sizes to the observer
+                        observer.postMessage({ canvas: battlefield_offscreen }, [battlefield_offscreen]);
 
-                    // send the canvas sizes to the observer
-                    observer.postMessage({ action: 'size', par1: background_htmlcanvas.width, par2: background_htmlcanvas.height });
-                    break;
-                case "disconnected":
-                    updateConnectionStatus(false);
-                    break;
-                case "GameStartedEventForObserver":
-                    updateGameStatus("resumed");
-                case "resumed":
-                    updateGameStatus("resumed");
-                    break;
-                case "paused":
-                    updateGameStatus("paused");
-                    break;
-                case "stopped":
-                    updateGameStatus("stopped");
-                    break;
+                        // send the canvas sizes to the observer
+                        observer.postMessage({ action: 'size', par1: background_htmlcanvas.width, par2: background_htmlcanvas.height });
+                        break;
+                    case "disconnected":
+                        updateConnectionStatus(false);
+                        break;
+                    case "GameStartedEventForObserver":
+                        updateGameStatus("resumed");
+                    case "resumed":
+                        updateGameStatus("resumed");
+                        break;
+                    case "paused":
+                        updateGameStatus("paused");
+                        break;
+                    case "stopped":
+                        updateGameStatus("stopped");
+                        break;
+                    case "tick":
+                        updateGameStatus("resumed");
+                }
             }
         });
 
@@ -97,8 +104,8 @@ function sizeCanvas() {
     var canvasWidth = is_landscape ? gameSetup.arenaWidth * ratio : screenWidth;
     var canvasHeight = is_landscape ? screenHeight : gameSetup.arenaHeight * ratio;
 
-    var leftOffset = Math.max(0,(screenWidth - canvasWidth) / 2);
-    var topOffset = Math.max(0,(screenHeight - canvasHeight) / 2);
+    var leftOffset = Math.max(0, (screenWidth - canvasWidth) / 2);
+    var topOffset = Math.max(0, (screenHeight - canvasHeight) / 2);
 
     var gameCanvases = document.getElementsByClassName("gamecanvas");
     for (var i = 0; i < gameCanvases.length; i++) {
@@ -139,6 +146,12 @@ function enableListeners() {
         // sizeCanvas();
         // drawBackground(background_context);
 
+        // fade out all ".gamecanvas" elements
+        const gameCanvases = document.getElementsByClassName("block");
+        for (var i = 0; i < gameCanvases.length; i++) {
+            gameCanvases[i].style.opacity = 0;
+        }
+
         // reload page
         location.reload();
     });
@@ -172,7 +185,7 @@ function enableListeners() {
 
 function drawBackground(bctx) {
     bctx.clearRect(0, 0, bctx.canvas.width, bctx.canvas.height)
-    bctx.fillStyle = "rgba(39, 99, 245, 0.9)";
+    bctx.fillStyle = "rgba(50, 50, 50, 0.9)";
     bctx.fillRect(0, 0, bctx.canvas.width, bctx.canvas.height)
     // bctx.fillStyle = 'lime'
 
@@ -230,6 +243,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // TEMP: load the gameSetup from file
     // console.table(gameSetup); // gameSetup is defined in public/js/gameSetup.js loaded in index.html
+
+    // fade in all ".gamecanvas" elements
+    const gameCanvases = document.getElementsByClassName("gamecanvas");
+    for (var i = 0; i < gameCanvases.length; i++) {
+        gameCanvases[i].style.transition = "opacity 0.5s";
+        gameCanvases[i].style.opacity = 1;
+    }
 });
 
 /**
@@ -243,20 +263,8 @@ function updateConnectionStatus(status) {
         statusElement.innerHTML = '<span class="icon"><i class="fa fa-check"></i></span>';
     } else {
         statusElement.innerHTML = '<span class="icon"><i class="fa fa-times"></i></span>';
-    }
-}
-
-/**
- * Updates the screen lock status in the UI.
- * 
- * @param {boolean} status - The screen lock status. True if locked, false otherwise.
- */
-function updateScreenLockStatus(status) {
-    const statusElement = document.querySelector("#screen_lock .status");
-    if (status) {
-        statusElement.innerHTML = '<span class="icon"><i class="fa fa-check"></i></span>';
-    } else {
-        statusElement.innerHTML = '<span class="icon"><i class="fa fa-times"></i></span>';
+        updateServerVersion('<span class="icon"><i class="fa fa-question"></i></span>');
+        updateGameStatus("stopped");
     }
 }
 
@@ -269,18 +277,27 @@ function updateGameStatus(status) {
     const gameStatusElement = document.querySelector("#game_status .status");
     switch (status) {
         case "resumed":
-            gameStatusElement.innerHTML = '<span class="icon"><i class="fa fa-play"></i></span>';
+            gameStatusElement.innerHTML = '<span class="icon"><i class="fa fa-check"></i></span>';
             break;
         case "paused":
             gameStatusElement.innerHTML = '<span class="icon"><i class="fa fa-pause"></i></span>';
             break;
         case "stopped":
-            gameStatusElement.innerHTML = '<span class="icon"><i class="fa fa-stop"></i></span>';
+            gameStatusElement.innerHTML = '<span class="icon"><i class="fa fa-times"></i></span>';
+            break;
+        case "unknown":
+            gameStatusElement.innerHTML = '<span class="icon"><i class="fa fa-question"></i></span>';
             break;
         default:
+            gameStatusElement.innerHTML = '<span class="icon"><i class="fa fa-question"></i></span>';
             console.log("Unknown game status: ", status);
             break;
     }
+}
+
+function updateServerVersion(version) {
+    const versionElement = document.querySelector("#server_version .status");
+    versionElement.innerHTML = version;
 }
 
 // Functions to open and close a modal

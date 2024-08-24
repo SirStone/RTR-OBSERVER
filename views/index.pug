@@ -8,13 +8,15 @@ html
     link(rel="stylesheet" href="css/index.css")
     script(src='js/serviceWorkerRegister.js')
   body.has-background-dark
+    canvas.gamecanvas(id='background')
+    canvas.gamecanvas(id='battlefield')
     button.button.is-warning.m-1.js-modal-trigger(data-target="settings_modal") Settings
     div.block
       div.block(id="status_container")
           div.field.is-grouped.is-grouped-multiline.p-1
             div.control
               div.tags.has-addons
-                span.tag.is-white Version
+                span.tag.is-white PWA
                 span.tag.is-info.status #{version}
             div.control(id="connection_status")
               div.tags.has-addons
@@ -28,8 +30,12 @@ html
                 span.tag.is-info.status
                   span.icon
                     i.fa.fa-question
-    canvas.gamecanvas(id='background')
-    canvas.gamecanvas(id='battlefield')
+            div.control(id="server_version")
+              div.tags.has-addons
+                span.tag.is-white Server
+                span.tag.is-info.status
+                  span.icon
+                    i.fa.fa-question
     
     div.modal(id="settings_modal")
       div.modal-background
