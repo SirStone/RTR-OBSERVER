@@ -46,6 +46,10 @@ function connectToServer(url, port, secret, observer_name) {
         switch (message.type) {
             case "ServerHandshake":
                 postMessage({ serverVersion: message.version })
+
+                // if the server handshake contains the gmaeSetup, send it to the main thread
+                if (message.gameSetup) postMessage({ gameSetup: message.gameSetup })
+
                 // send a handshake response
                 var observer_handshake = {
                     sessionId: message.sessionId,
@@ -119,7 +123,7 @@ function connectToServer(url, port, secret, observer_name) {
                     )
 
                     // hitting circle
-                    let hittingCircle_radius = drawHittingCircle(
+                    let hittingCircle_radius = drawBody(
                         botstate,
                         ratio,
                         bot_centerX,
@@ -145,6 +149,9 @@ function connectToServer(url, port, secret, observer_name) {
 
                 break
             case "GameStartedEventForObserver":
+                // send the gameSetup to the main thread
+                postMessage({ gameSetup: message.gameSetup })
+
                 postMessage("resumed")
                 clearHits()
                 break
@@ -316,12 +323,14 @@ function drawRadar(botstate, ratio, x, y, radarRadius) {
     battlefield_ctx.lineTo(x, y)
     battlefield_ctx.lineTo(linetoX2, linetoY2)
 
-    // fill!
+    // fill and stroke!
     battlefield_ctx.fillStyle = botstate.scanColor ? botstate.scanColor + "80" : '#FFFFFF90'
+    battlefield_ctx.strokeStyle = botstate.scanColor ? botstate.scanColor + "80" : '#FFFFFF90'
     battlefield_ctx.fill()
+    battlefield_ctx.stroke()
 }
 
-function drawHittingCircle(botstate, ratio, x, y) {
+function drawBody(botstate, ratio, x, y) {
     y = battlefield_canvas.height - y
     var hittingCircle_radius = 18 * ratio
     battlefield_ctx.beginPath()

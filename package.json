@@ -6,11 +6,10 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-ws": "^5.0.2",
-    "jquery-ui": "^1.13.3",
     "pug": "^3.0.3"
   },
   "name": "rtr-gui-pwa",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "RTR WEB GUI made as PWA",
   "main": "app.js",
   "devDependencies": {

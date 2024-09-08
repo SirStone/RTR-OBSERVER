@@ -16,6 +16,8 @@ localStorage.setItem("secret", secret);
 localStorage.setItem("observer_name", observerName);
 
 var observer = false;
+var gameSetup = false;
+
 // backround canvas context
 const background_htmlcanvas = document.getElementById("background");
 const background_context = background_htmlcanvas.getContext("2d");
@@ -43,23 +45,38 @@ function runObserver() {
         observer.addEventListener('message', function (event) {
             if (event.data.serverVersion) {
                 updateServerVersion(event.data.serverVersion);
+                return;
             }
+            
+            if (event.data.gameSetup) {
+                gameSetup = event.data.gameSetup;
+                console.log("gameSetup received");
+
+                // draw the battlefields
+                sizeCanvas();
+
+                drawBackground(background_context);
+
+                // draw the battlefield
+                // pass the battlefield canvas sizes to the observer
+                
+                try {
+                    observer.postMessage({ canvas: battlefield_offscreen }, [battlefield_offscreen]);
+
+                    // send the canvas sizes to the observer
+                    observer.postMessage({ action: 'size', par1: background_htmlcanvas.width, par2: background_htmlcanvas.height });
+                }
+                catch (error) {
+                    // console.log("canvas already detatched");
+                }
+                                        
+                return;
+            }
+
             else {
                 switch (event.data) {
                     case "connected":
                         updateConnectionStatus(true);
-
-                        // draw the battlefields
-                        sizeCanvas();
-
-                        drawBackground(background_context);
-
-                        // draw the battlefield
-                        // pass the battlefield canvas sizes to the observer
-                        observer.postMessage({ canvas: battlefield_offscreen }, [battlefield_offscreen]);
-
-                        // send the canvas sizes to the observer
-                        observer.postMessage({ action: 'size', par1: background_htmlcanvas.width, par2: background_htmlcanvas.height });
                         break;
                     case "disconnected":
                         updateConnectionStatus(false);
@@ -74,6 +91,9 @@ function runObserver() {
                         break;
                     case "stopped":
                         updateGameStatus("stopped");
+
+                        // clear the gameSetup
+                        gameSetup = false; 
                         break;
                     case "tick":
                         updateGameStatus("resumed");
@@ -91,6 +111,11 @@ function runObserver() {
 
 // Battlefield drawing
 function sizeCanvas() {
+    if (!gameSetup) {
+        console.error("gameSetup not available.");
+        return;
+    }
+
     // constant for the window width and height
     var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0;
     var screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;
