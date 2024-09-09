@@ -8,7 +8,6 @@ const precache = [
   '/manifest.json',
   '/js/index.js',
   '/js/observer.js',
-  '/js/gameSetup.js',
 ];
 
 self.addEventListener('install', event => {
