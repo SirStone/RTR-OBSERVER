@@ -6,7 +6,7 @@
     "pug": "^3.0.3"
   },
   "name": "rtr-gui-pwa",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "RTR WEB GUI made as PWA",
   "main": "app.js",
   "devDependencies": {

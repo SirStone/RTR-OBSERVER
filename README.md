@@ -10,7 +10,8 @@ It's built using:
 
 ## Installation
 1. Clone the repository
-2. Run `node app.js` in the root directory
+2. Run `npm install` in the root directory
+3. Run `node app.js`
 
 The application will be available at `http://localhost:8000` and `https://localhost:8443`
 
