@@ -5,9 +5,9 @@
     "express": "^4.19.2",
     "pug": "^3.0.3"
   },
-  "name": "rtr-gui-pwa",
-  "version": "1.7.2",
-  "description": "RTR WEB GUI made as PWA",
+  "name": "RTR-OBSERVER",
+  "version": "1.7.3",
+  "description": "RTR OBSERVER PWA",
   "main": "app.js",
   "devDependencies": {
     "browser-sync": "^3.0.2",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "gitea@localhost:SirStone/RTR-GUI-PWA.git"
+    "url": "gitea@localhost:SirStone/RTR-OBSERVER.git"
   },
   "keywords": [
     "robocode",
